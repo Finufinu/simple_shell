@@ -13,15 +13,15 @@
 #include <errno.h>
 
 /* for read/write buffers */
-#define READ_BUF_SIZE 1040
-#define WRITE_BUF_SIZE 1040
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
 /* for command chaining */
-#define CMD_NORM	0            
+#define CMD_NORM	0
 #define CMD_OR		1
 #define CMD_AND		2
-#define CMD_CHAIN       3	
+#define CMD_CHAIN	3
 
 /* for convert_number() */
 #define CONVERT_LOWERCASE	1
@@ -32,7 +32,7 @@
 #define USE_STRTOK 0
 
 #define HIST_FILE	".simple_shell_history"
-#define HIST_MAX	4000
+#define HIST_MAX	4096
 
 extern char **environ;
 
@@ -50,9 +50,9 @@ typedef struct liststr
 } list_t;
 
 /**
- * struct passinfo - contains pseudo-arguments to pass into a function,
+ * struct passinfo - contains pseudo-arguements to pass into a function,
  * allowing uniform prototype for function pointer struct
- * @arg: a string generated from getline containing arguments
+ * @arg: a string generated from getline containing arguements
  * @argv: an array of strings generated from arg
  * @path: a string path for the current command
  * @argc: the argument count
@@ -88,7 +88,7 @@ typedef struct passinfo
 	int env_changed;
 	int status;
 
-	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory management */
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
@@ -111,19 +111,16 @@ typedef struct builtin
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);
-int is_builtin(info_t *);
-
+int find_builtin(info_t *);
 void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
 /* toem_parser.c */
 int is_cmd(info_t *, char *);
-
-char *dup_chars(char *, int, int);            
+char *dup_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
 
-/*  toem_ loophsh.c */
-
+/* loophsh.c */
 int loophsh(char **);
 
 /* toem_errors.c */
@@ -135,8 +132,7 @@ int _putsfd(char *str, int fd);
 /* toem_string.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
-
-char *begins_with(const char *, const char *);                      
+char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
 /* toem_string1.c */
@@ -151,15 +147,13 @@ char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
 /* toem_tokenizer.c */
-char **strtow (char *, char *);
-char **strtow2 (char *str , char  delim); 
-
+char **strtow(char *, char *);
+char **strtow2(char *, char);
 
 /* toem_realloc.c */
-char *_memset (char *, char, unsigned int);
+char *_memset(char *, char, unsigned int);
 void ffree(char **);
-void *_realloc (void *ptr , unsigned int old_size, unsigned int new_size);
-
+void *_realloc(void *, unsigned int, unsigned int);
 
 /* toem_memory.c */
 int bfree(void **);
@@ -237,4 +231,3 @@ int replace_vars(info_t *);
 int replace_string(char **, char *);
 
 #endif
-

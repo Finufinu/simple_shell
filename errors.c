@@ -1,94 +1,62 @@
 #include "shell.h"
 
 /**
-* my_eputs - prints an input string
+* *_eputs - prints an input string
 * @str: the string to be printed
-*
 * Return: Nothing
 */
-void my_eputs(char *str)
+void _eputs(char *str)
 {
-
-int r = 0;
-
+int m = 0;
 
 if (!str)
 return;
-while (str[r] != '\0')
+while (str[m] != '\0')
 {
-int  my_eput(char str[r]);
-r++;
+_eputchar(str[m]);
+m++;
 }
 }
-
 /**
-* my_eputchar - writes the character to x stderr
+* _eputchar - writes the character c to stderr
+* @c: The character to print
 *
-* @x: The character to print
-*
-* Return: On success 1.
-* On error, -1 is returned, and error handling  is set appropriately.
+* Return: On success1.
+* On error, -1 is returned, and errno is set appropriately
 */
-
-int  my_eputchar(char x)
-
+int _eputchar(char c)
 {
-static int r;
+static int i;
 static char buf[WRITE_BUF_SIZE];
 
-if (x == BUF_FLUSH || r >= WRITE_BUF_SIZE)
+if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 {
-write(2, buf,r);
-r = 0;
+write(2, buf, i);
+i = 0;
 }
-if(r != BUF_FLUSH)
-buf[r++] = x;
+if (c != BUF_FLUSH)
+buf[i++] = c;
 return (1);
 }
-
 /**
-* my_putfd - writes the character x to given fd
-* @x: The character to print
+* _putfd - writes the character c to given fd
+* @c: The character to print
 * @fd: The filedescriptor to write to
 *
-* Return: On success 1.
-* On error, -1 is returned, and error handling  is set appropriately.
+* Return: On success 1
+* On error, -1 is returned and errno is set appropriateky
 */
-int my_putfd(char x, int fd)
+int _putfd(char c, int fd)
 {
-static int r;
+static int n;
 static char buf[WRITE_BUF_SIZE];
 
-if (x == BUF_FLUSH || r >= WRITE_BUF_SIZE)
+if (c == BUF_FLUSH || n >= WRITE_BUF_SIZE)
 {
-write(fd, buf, r);
-r = 0;
+write(fd, buf, n);
+n = 0;
 }
-if (x != BUF_FLUSH)
-buf[r++] = x;
+if (c != BUF_FLUSH)
+buf[n++] = c;
 return (1);
-}
-
-/**
-*my_putsfd - prints an input string
-* @str: the string to be printed
-* @fd: the filedescriptor to write to
-*
-* Return: the number of chars put
-*/
-int  my_putsfd(char *str, int fd)
-{
-int r = 0;
-
-if (!str)
-return (0);
-while (*str)
-{
-r += my_putfd(*str++, fd);
-}
-
-
-return (r);
-
-
 }
