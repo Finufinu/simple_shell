@@ -1,9 +1,8 @@
 #include "shell.h"
 
-
 /**
 * unset_alias - sets alias to string.
-* @info: parameter struct.
+* @info: parameter struct
 * @str: the string alias.
 *
 * Return: Always 0 on success, 1 on error.
